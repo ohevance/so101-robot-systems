@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "robot-systems"
+version = "0.1.0"
+description = "SO-101 teleoperation, data collection, evaluation and on-board inference"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+robot = ["lerobot[core_scripts,feetech]==0.7.0"]
+dev = ["pytest==9.1.1", "ruff==0.16.9"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# ROS 2를 적용한 셸에서는 PYTHONPATH 때문에 ROS의 pytest 플러그인이 함께 로드된다.
+# 이 저장소의 테스트는 플러그인을 쓰지 않으므로 자동 로드를 끈다(docs/decisions/0003-python-env.md).
+addopts = ["--disable-plugin-autoload"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
